@@ -1,10 +1,10 @@
-from .utils import DataLoader
+from pandas.io.parsers import TextFileReader
+from utils import DataLoader
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 from sklearn.model_selection import KFold
 from sklearn.metrics import f1_score, balanced_accuracy_score, confusion_matrix
-
 
 dl = DataLoader('data/Ethos_Dataset_Binary.csv')
 X, y = dl.get_data()

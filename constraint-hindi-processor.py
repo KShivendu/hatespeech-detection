@@ -9,4 +9,5 @@ print(df['isHate'][:10])
 print(f"{sum(df['isHate'])} (label : hate) + {len(df) - sum(df['isHate'])} (label : not-hate) = {len(df)}")
 
 
-df.to_csv('data/constraint_Hindi_Train-cleaned.csv', index=False)
+df.to_csv('data/constraint_Hindi_Train-cleaned.csv',
+          index=False, sep=';')

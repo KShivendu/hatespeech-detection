@@ -1,0 +1,2 @@
+Method  | Duration scoreTi F1      Prec.   Recall  Acc.    Spec.   Sens.   
+=========================================================================

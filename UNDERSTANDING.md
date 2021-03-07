@@ -7,7 +7,7 @@
 - Finally, it would be interesting to investigate the overall performance of an SVMmodel trained on a combination dataset of those two
 - Combined dataset gave better results.
 
-### setA
+### setA : DONE
 - In this set of experiments we will try logistic regression, svms, ridge, decision trees, naive bayes and random forests classifiers across a wide variety of parameters for each algorithm and test them via nested cross validation method.
 
 ### setA+XHS
@@ -16,7 +16,7 @@
 ### setA-on-external
 - Like setA but on external dataset
 
-### setB
+### setB : DONE
 - In this set of experiments we will try AdaBoost, GraBoost and Bagging across a wide variety of parameters for each algorithm and test them via nested cross validation method.
      
 

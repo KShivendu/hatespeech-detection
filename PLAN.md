@@ -23,7 +23,7 @@ TfidfVectorizer(analyzer='word', ngram_range=(1, 5), max_features=50000)
 8. AdaBoost
 9. BaggingClassifier (with max_samples &/|| max_features)
 
-### text_to_secuenxe & Embeddings:
+### text_to_seq & Embeddings:
 1. FastText
 2. GloVe
 3. GloVe + FastText

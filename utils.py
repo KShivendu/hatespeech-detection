@@ -118,7 +118,7 @@ def print_save(text, path, method='a+'):
     f.close()
 
 
-def nested_cross_val(pipe, parameters, X, y, name):
+def nested_cross_val(pipe, parameters, X, y, name, n_jobs=18, filename='setA.txt'):
     scores = {}
     scores.setdefault('fit_time', [])
     scores.setdefault('score_time', [])
@@ -136,7 +136,7 @@ def nested_cross_val(pipe, parameters, X, y, name):
         y_trainO, y_testO = y[train_index], y[test_index]
         inner_cv = KFold(n_splits=3, shuffle=True, random_state=0)
         clf = GridSearchCV(estimator=pipe, param_grid=parameters,
-                           cv=inner_cv, n_jobs=18, verbose=1, scoring='f1')
+                           cv=inner_cv, n_jobs=n_jobs, verbose=1, scoring='f1')
         a = time.time()
         clf.fit(X_trainO, y_trainO)
         fit_time = time.time() - a
@@ -161,4 +161,4 @@ def nested_cross_val(pipe, parameters, X, y, name):
                                                                                     sum(scores['score_time'])/10)), str('%.4f' % (sum(scores['test_F1'])/10)),
                                                                                 str('%.4f' % (sum(scores['test_Precision'])/10)), str('%.4f' % (
                                                                                     sum(scores['test_Recall'])/10)), str('%.4f' % (sum(scores['test_Accuracy'])/10)),
-                                                                                str('%.4f' % (sum(scores['test_Specificity'])/10)), str('%.4f' % (sum(scores['test_Sensitivity'])/10))), 'res/setA.txt')
+                                                                                str('%.4f' % (sum(scores['test_Specificity'])/10)), str('%.4f' % (sum(scores['test_Sensitivity'])/10))), f'res/{filename}')

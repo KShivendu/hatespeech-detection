@@ -18,7 +18,6 @@
 
 ### setB : DONE
 - In this set of experiments we will try AdaBoost, GraBoost and Bagging across a wide variety of parameters for each algorithm and test them via nested cross validation method.
-     
 
 ### setC
 - Testing a variety of NN architectures with Embeddings
@@ -31,7 +30,6 @@
 
 ### setE
 - In this set of experiments we will try classic multi label algorithms to find the best classifiers.
-
 
 ### setZ
 - Classic Multi-label algorithms + Neural Networks and Embeddings

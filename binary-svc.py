@@ -12,7 +12,6 @@ print(len(X), len(y))
 print(f'{len(y)-sum(y)} (label : 0) + {sum(y)} (label : 1) = {len(y)}')
 print(X[0])
 print(y[0])
-class_names = ['not-hate-speech', 'hate-speech']
 
 # ML Model
 kf = KFold(n_splits=10)

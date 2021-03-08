@@ -21,6 +21,7 @@ class DataLoader:
         cls.eng_stemmer = SnowballStemmer("english", ignore_stopwords=True)
         cls.stopwords = stopwords.words('english')
         cls.cleaner = cleaner
+        class_names = ['not-hate-speech', 'hate-speech']
 
     def get_data(cls, preprocessed=True, stemming=True):
         data = pd.read_csv(cls.filename, delimiter=';')
@@ -118,16 +119,24 @@ def print_save(text, path, method='a+'):
     f.close()
 
 
+def merge_dicts(dict_elements, dict_with_lists):
+    for k, v in dict_elements.items():
+        dict_with_lists[k].append(v)
+
+    return dict_with_lists
+
+
 def nested_cross_val(pipe, parameters, X, y, name, n_jobs=18, filename='setA.txt'):
-    scores = {}
-    scores.setdefault('fit_time', [])
-    scores.setdefault('score_time', [])
-    scores.setdefault('test_F1', [])
-    scores.setdefault('test_Precision', [])
-    scores.setdefault('test_Recall', [])
-    scores.setdefault('test_Accuracy', [])
-    scores.setdefault('test_Specificity', [])
-    scores.setdefault('test_Sensitivity', [])
+    scores = {
+        'fit_time': [],
+        'score_time': [],
+        'test_F1': [],
+        'test_Precision': [],
+        'test_Recall': [],
+        'test_Accuracy': [],
+        'test_Specificity': [],
+        'test_Sensitivity': [],
+    }
 
     outer_cv = KFold(n_splits=10, shuffle=True, random_state=0)
     splits = outer_cv.split(X)
@@ -143,22 +152,32 @@ def nested_cross_val(pipe, parameters, X, y, name, n_jobs=18, filename='setA.txt
         a = time.time()
         y_preds = clf.predict(X_testO)
         score_time = time.time() - a
-        scores['fit_time'].append(fit_time)
-        scores['score_time'].append(score_time)
-        scores['test_F1'].append(f1_score(y_testO, y_preds, average='macro'))
-        scores['test_Precision'].append(
-            precision_score(y_testO, y_preds, average='macro'))
-        scores['test_Recall'].append(
-            recall_score(y_testO, y_preds, average='macro'))
-        scores['test_Accuracy'].append(accuracy_score(y_testO, y_preds))
-        scores['test_Specificity'].append(specificity(y_testO, y_preds))
-        scores['test_Sensitivity'].append(sensitivity(y_testO, y_preds))
+        current_scores = {
+            'fit_time': fit_time,
+            'score_time': score_time,
+            'test_F1': f1_score(y_testO, y_preds, average='macro'),
+            'test_Precision': precision_score(y_testO, y_preds, average='macro'),
+            'test_Recall': recall_score(y_testO, y_preds, average='macro'),
+            'test_Accuracy': accuracy_score(y_testO, y_preds),
+            'test_Specificity': specificity(y_testO, y_preds),
+            'test_Sensitivity': sensitivity(y_testO, y_preds),
+        }
+        scores = merge_dicts(current_scores, scores)
 
+    print(scores)
+    
     for k in scores:
-        print(str(name)+" "+str(k)+": "+str(sum(scores[k])/10))
-    print_save("{:<7} | {:<7} {:<7} {:<7} {:<7} {:<7} {:<7} {:<7} {:<7}".format(str(name)[:7],
-                                                                                str('%.4f' % (sum(scores['fit_time'])/10)), str('%.4f' % (
-                                                                                    sum(scores['score_time'])/10)), str('%.4f' % (sum(scores['test_F1'])/10)),
-                                                                                str('%.4f' % (sum(scores['test_Precision'])/10)), str('%.4f' % (
-                                                                                    sum(scores['test_Recall'])/10)), str('%.4f' % (sum(scores['test_Accuracy'])/10)),
-                                                                                str('%.4f' % (sum(scores['test_Specificity'])/10)), str('%.4f' % (sum(scores['test_Sensitivity'])/10))), f'res/{filename}')
+        print(f"{name} {k}: {sum(scores[k])/10}")
+    print_save(
+        "{:<7} | {:<7} {:<7} {:<7} {:<7} {:<7} {:<7} {:<7} {:<7} \n".format(
+            str(name)[:7],
+            str('%.4f' % (sum(scores['fit_time'])/10)),
+            str('%.4f' % (sum(scores['score_time'])/10)),
+            str('%.4f' % (sum(scores['test_F1'])/10)),
+            str('%.4f' % (sum(scores['test_Precision'])/10)),
+            str('%.4f' % (sum(scores['test_Recall'])/10)),
+            str('%.4f' % (sum(scores['test_Accuracy'])/10)),
+            str('%.4f' % (sum(scores['test_Specificity'])/10)),
+            str('%.4f' % (sum(scores['test_Sensitivity'])/10))),
+        f'res/{filename}',
+    )

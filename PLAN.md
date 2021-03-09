@@ -39,7 +39,6 @@ TfidfVectorizer(analyzer='word', ngram_range=(1, 5), max_features=50000)
 7. Full Connected + LSTMs + BiLSTMs + CNNs
 
 
-
 <!-- 
 ## MultiClass Classification on Ethos HateSpeech Dataset
 
@@ -49,7 +48,6 @@ TfidfVectorizer(analyzer='word', ngram_range=(1, 5), max_features=50000)
 2. Pairwise
 3. Classifier Chains
 4. Classifier Chains for some labels (maybe the 'isHate' label) and then binary relevance
-
 
 ## Metrics
 

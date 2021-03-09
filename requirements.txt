@@ -2,3 +2,6 @@ pandas
 numpy
 scikit-learn
 nltk
+pytorch
+torchtext==0.7
+transformers

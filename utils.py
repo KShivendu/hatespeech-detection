@@ -323,7 +323,7 @@ def create_embedding_matrix(embed, tk, max_features, fasttext='./embeddings/craw
         return np.concatenate([build_matrix(fasttext, tk, max_features), build_matrix(glove, tk, max_features)], axis=-1)
 
 
-def run_model_on_fold(name, max_len, embed_size, embed, bulid_fun):
+def run_model_on_fold(name, max_len, embed_size, embed, bulid_fun, folds,X,y):
     max_features = 50000
     scores = {}
     scores.setdefault('fit_time', [])

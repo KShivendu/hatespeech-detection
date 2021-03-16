@@ -325,15 +325,16 @@ def create_embedding_matrix(embed, tk, max_features, fasttext='./embeddings/craw
 
 def run_model_on_fold(name, max_len, embed_size, embed, bulid_fun):
     max_features = 50000
-    scores = {}
-    scores.setdefault('fit_time', [])
-    scores.setdefault('score_time', [])
-    scores.setdefault('test_F1', [])
-    scores.setdefault('test_Precision', [])
-    scores.setdefault('test_Recall', [])
-    scores.setdefault('test_Accuracy', [])
-    scores.setdefault('test_Specificity', [])
-    scores.setdefault('test_Sensitivity', [])
+    scores = {
+        'fit_time': [],
+        'score_time': [],
+        'test_F1': [],
+        'test_Precision': [],
+        'test_Recall': [],
+        'test_Accuracy': [],
+        'test_Specificity': [],
+        'test_Sensitivity': [],
+    }
     for fold_n, (train_index, valid_index) in enumerate(folds.split(X, y)):
         print('Fold', fold_n, 'started at', time.ctime())
         X_train, X_valid = X[train_index], X[valid_index]

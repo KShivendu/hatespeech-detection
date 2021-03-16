@@ -9,7 +9,7 @@ from utils import DataLoader
 import pandas as pd
 import zipfile
 from utils import sensitivity, specificity, run_model_on_fold
-from models import build_model1, build_model3, build_model4, build_model5
+from nn_models import build_model1, build_model3, build_model4, build_model5
 pd.set_option('max_colwidth', 400)
 
 
